@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<!-- Declaración del tipo de documento HTML5 -->
+
+<html lang="es">
+  <!-- Elemento raíz del documento, especifica idioma inglés -->
+
+  <head>
+    <!-- Encabezado del documento (metadatos) -->
+
+    <meta charset="UTF-8" />
+
+    <!-- Especifica la codificación de caracteres UTF-8 -->
+
+    <title>Invitación Agazajo 🎉</title>
+
+    <!-- Enlace al archivo de estilos CSS externo -->
+    <link rel="stylesheet" href="estilos.css" />
+  </head>
+
+  <body>
+    <!-- Cuerpo del documento (contenido visible) -->
+
+    <!-- Estilos CSS para el sobre y la carta -->
+
+    <style></style>
+
+    <!-- Estructura HTML del sobre interactivo -->
+
+    <div class="envelope" onclick="abrirSobre(this)">
+      <div class="envelope-inner">
+        <!-- Frente del sobre -->
+
+        <div class="envelope-front">
+          <div class="postage-stamp">
+            <img
+              src="https://www.usco.edu.co/imagen-institucional/ocre/universidad-surcolombiana-v.png"
+            />
+          </div>
+
+          <div class="address">
+            <p><span>Para:</span> <span id="nombreInvitado">Invitado</span></p>
+
+            <p><span>De:</span> <span>Jordi Joan Ramirez Castro</span></p>
+          </div>
+        </div>
+
+        <!-- Dorso del sobre (contiene la carta) -->
+
+        <div class="envelope-back">
+          <div class="top-fold"></div>
+
+          <!-- Carta que se revela -->
+
+          <div class="letter">
+            <img
+              src="https://www.usco.edu.co/imagen-institucional/logo/universidad-surcolombiana-v.png"
+              alt="love1"
+              class="custom-image"
+            />
+
+            <p id="mensajeCarta">
+              <span id="nombreCarta">Invitado</span>, me complace invitarte a un
+              Agazajo con familiares y amigos, para celebrar el titulo de Fisco,
+              otorgado por la Universidad Surcolombiana.
+            </p>
+
+            <div class="buttons">
+              <button class="btn-yes" onclick="asistire()">ASISTIRÉ</button>
+
+              <button class="btn-no" onclick="noAsistire()">NO ASISTIRÉ</button>
+            </div>
+
+            <img
+              src="https://cdn.pixabay.com/photo/2012/12/06/16/03/atom-68866_960_720.jpg"
+              alt="love2"
+              class="custom-image2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mensajeEmergente" class="mensaje-oculto">
+      Lamentamos que no puedas asistir, será para la próxima
+    </div>
+
+    <!-- Script de Google AdSense -->
+
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704501585981299"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Script para deshabilitar funciones del navegador -->
+
+    <script>
+      // Previene el menú contextual (clic derecho)
+
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      });
+
+      // Previene acceso a herramientas de desarrollo
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "F12") {
+          e.preventDefault();
+        }
+
+        if (e.ctrlKey && e.shiftKey && e.key === "I") {
+          e.preventDefault();
+        }
+
+        if (e.ctrlKey && e.key === "u") {
+          e.preventDefault();
+        }
+      });
+    </script>
+
+    <script>
+      // Función para obtener el valor de un parámetro en la URL
+      function obtenerParametro(nombre) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(nombre);
+      }
+
+      const nombre = obtenerParametro("nombre");
+      if (nombre) {
+        // Para el encabezado (por ejemplo, "Para: Juan")
+        const elementoNombre = document.getElementById("nombreInvitado");
+        if (elementoNombre) {
+          elementoNombre.textContent = nombre;
+        }
+
+        // Para el cuerpo de la carta (por ejemplo, "Juan, eres cordialmente invitado...")
+
+        const nombreEnCarta = document.getElementById("nombreCarta");
+
+        if (nombreEnCarta) {
+          nombreEnCarta.textContent = nombre;
+        }
+      }
+
+      function asistire() {
+        const numero = "573249000324";
+
+        // Obtiene el nombre del invitado desde el elemento en la carta
+        const nombre =
+          document.getElementById("nombreCarta")?.textContent || "Invitado";
+
+        const enlaceUbicacion = "https://maps.app.goo.gl/8wczGvevv6v6VYud8";
+
+        const mensaje = encodeURIComponent(
+          `Hola, soy ${nombre}. Pienso asistir al evento en la dirección: ${enlaceUbicacion}`
+        );
+
+        const url = `https://wa.me/${numero}?text=${mensaje}`;
+
+        window.open(url, "_blank");
+      }
+
+      function noAsistire() {
+        const mensaje = document.getElementById("mensajeEmergente");
+
+        mensaje.style.display = "block";
+
+        setTimeout(() => {
+          mensaje.style.display = "none";
+        }, 4000); // Mostrar por 4 segundos
+      }
+    </script>
+
+    <script>
+      function abrirSobre(elemento) {
+        elemento.classList.toggle("abierto");
+
+        const carta = elemento.querySelector(".letter");
+        if (carta) carta.scrollTop = 0;
+      }
+    </script>
+  </body>
+</html>
